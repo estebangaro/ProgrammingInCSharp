@@ -1,0 +1,6 @@
+c:\users\esteb\onedrive\documentos\visual studio 2017\Projects\Programming in CSharp\delegados_t1\bin\Debug\delegados_t1.exe.config
+c:\users\esteb\onedrive\documentos\visual studio 2017\Projects\Programming in CSharp\delegados_t1\bin\Debug\delegados_t1.exe
+c:\users\esteb\onedrive\documentos\visual studio 2017\Projects\Programming in CSharp\delegados_t1\bin\Debug\delegados_t1.pdb
+c:\users\esteb\onedrive\documentos\visual studio 2017\Projects\Programming in CSharp\delegados_t1\obj\Debug\delegados_t1.csprojResolveAssemblyReference.cache
+c:\users\esteb\onedrive\documentos\visual studio 2017\Projects\Programming in CSharp\delegados_t1\obj\Debug\delegados_t1.exe
+c:\users\esteb\onedrive\documentos\visual studio 2017\Projects\Programming in CSharp\delegados_t1\obj\Debug\delegados_t1.pdb
