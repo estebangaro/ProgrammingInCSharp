@@ -25,10 +25,11 @@ namespace PLINQ
                                     where person.City == "México"
                                     select new Person { Name = person.Name, City = person.City};
 
-            ShowPersonsFromQuery(PersonsFromMexico);
+            //ShowPersonsFromQuery(PersonsFromMexico);
             //QuertWithFurtherInform(Persons);
             //QuertWithAsOrdered(Persons);
-            QuerytWithAsSequiential2(Persons);
+            //QuerytWithAsSequiential2(Persons);
+            UsingTryCatchInPLINQQuery(Persons);
 
             Console.WriteLine("Finished processing. Press a key to end.");
             Console.ReadKey();
@@ -109,6 +110,53 @@ namespace PLINQ
                 Console.WriteLine(name);
             });
         }
+
+        static void UsingTryCatchInPLINQQuery(Person[] dataSource)
+        {
+            //Comentarios: Se detiene la ejecución de la consulta paralelizada, a la primera excepción originada.
+            try
+            {
+                var Result = (from person in dataSource.AsParallel()
+                             where !person.Name.StartsWith("a", StringComparison.InvariantCultureIgnoreCase)
+                             select GetPersonFromPerson(person));
+
+                //System.Threading.Tasks.Parallel.Invoke(() => GetPersonFromPerson(dataSource[0]), () => GetPersonFromPerson(dataSource[1]), () => GetPersonFromPerson(dataSource[2]),
+                //() => GetPersonFromPerson(dataSource[3]), () => GetPersonFromPerson(dataSource[4]));
+
+                Result.ForAll(Person => Console.WriteLine(Person));
+                //foreach (var Person in Result)
+                //{
+                //    Console.WriteLine(Person);
+                //}
+            }
+            catch (AggregateException ae)
+            {
+                Console.WriteLine("Iniciando control de excepciones!!");
+                int i = 1;
+                System.Threading.Tasks.Parallel.ForEach(ae.InnerExceptions, innerException => Console.WriteLine($"Excepción #{i++}, " +
+                    $"Error: {ae.Message}"));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Inciando control de excepción; Error " + ex.Message);
+            }
+        }
+
+        static Person GetPersonFromPerson(Person person)
+        {
+            Console.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId + ") Obteniendo persona: " + person.Name);
+            if(person.Name.StartsWith("a", StringComparison.CurrentCultureIgnoreCase))
+            {
+                throw new ArgumentException("No se permiten nombres con letra de inicio en \"A\"; Nombre " + person.Name);
+            }
+
+            return new Person
+            {
+                City = person.City,
+                Color = person.Color,
+                Name = person.Name
+            };
+        }
     }
     
     class Person
@@ -131,7 +179,7 @@ namespace PLINQ
 
         public override string ToString()
         {
-            return $"Nombre: {Name}, Ciudad: {City}";
+            return $"Nombre: {Name}, Ciudad: {(City ?? "No registrada")}, Color {(Color ?? "No registrado")}";
         }
     }
 }
