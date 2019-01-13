@@ -21,7 +21,15 @@ namespace TasksOK
             //Console.WriteLine("Inciando ejecución de versión 3");
             //CreateTasksAndUseWaitAllMethodV3();
 
-            CreateTasksAndUseWaitAnyMethod();
+            //CreateTasksAndUseWaitAnyMethod();
+
+            //CreateTasksAndUseContinueWith();
+
+            //CreateTasksGenericAndUseContinueWith();
+
+            //UseTasksWithContinueWithMethodTwoTwice();
+
+            CreateChildrenTasks();
 
             Console.WriteLine("Process finished!");
             Console.WriteLine("Press any key to continue...");
@@ -101,6 +109,67 @@ namespace TasksOK
             Console.WriteLine("Al menos 1 tarea se ha completado; Tarea #" + FirstTaskCompleted);
         }
 
+        private static void CreateTasksAndUseContinueWith()
+        {
+            var AntecedentTask = Task.Run(new Action(TaskHello));
+
+            var ContinuationTask = AntecedentTask.ContinueWith(antecedentTask => TaskWorld());
+
+            ContinuationTask.Wait();
+
+            Console.WriteLine("Finalizando ejecución de tarea de continuación...");
+        }
+
+        private static void CreateTasksGenericAndUseContinueWith()
+        {
+            var AntecedentTask = Task.Run<string>(delegate () { TaskHello(); return "Hello "; });
+
+            var ContinuationTask = AntecedentTask.ContinueWith(antecedentTask => { Console.WriteLine("|Texto impreso en antecedente: " + antecedentTask.Result); TaskWorld(); });
+
+            ContinuationTask.Wait();
+
+            Console.WriteLine("Finalizando ejecución de tarea de continuación...");
+        }
+
+        private static void DoChild(object taskNumber)
+        {
+            Console.WriteLine("Start runing child Task #" + ((int)taskNumber + 1));
+            System.Threading.Thread.Sleep(1000);
+            Console.WriteLine("Task finishing #" + ((int)taskNumber + 1));
+        }
+
+        private static void CreateChildrenTasks()
+        {
+            Task ParentTask = Task.Factory.StartNew(delegate
+            {
+                Console.WriteLine("Iniciando ejecución de tarea padre");
+
+                for (int i = 0; i < 10; i++)
+                {
+                    Task.Factory.StartNew(DoChild, i, TaskCreationOptions.AttachedToParent);
+                }
+
+                Console.WriteLine("Finalizando creación de tareas hijas atachadas");
+            }, TaskCreationOptions.DenyChildAttach);
+
+            ParentTask.Wait();
+            Console.WriteLine("Finalizando ejecución de tarea padre");
+        }
+
+        private static void TaskHello()
+        {
+            System.Threading.Thread.Sleep(1000);
+            Console.Write("Hello ");
+
+            throw new Exception("caca");
+        }
+
+        private static void TaskWorld()
+        {
+            System.Threading.Thread.Sleep(1000);
+            Console.WriteLine("World");
+        }
+
         private static void CreateTasksAndUseWaitAllMethodV2()
         {
             Task[] Tasks = new Task[10];
@@ -127,6 +196,32 @@ namespace TasksOK
             }
 
             Parallel.Invoke(Tasks);
+        }
+
+        private static void UseTasksWithContinueWithMethodTwoTwice()
+        {
+            Task AntecedentTask = Task.Run(new Action(TaskHello));
+
+            Task ContinuationOk = AntecedentTask.ContinueWith(antecedentTask => TaskWorld(), TaskContinuationOptions.OnlyOnRanToCompletion);
+            Task ContinuationException = AntecedentTask.ContinueWith(antecedentTask => ExceptionHandler(antecedentTask), TaskContinuationOptions.OnlyOnFaulted);
+
+            Task.Run(delegate
+            {
+                System.Threading.Thread.Sleep(5000);
+                if (ContinuationOk.Status == TaskStatus.RanToCompletion)
+                {
+                    Console.WriteLine("Se ha ejecutado la tarea de continuación de éxito.");
+                }
+                else
+                {
+                    Console.WriteLine("Se ha ejecutado la tarea de continuación de manejo de excepción.");
+                }
+            });
+        }
+
+        private static void ExceptionHandler(Task antecedentTask)
+        {
+            Console.WriteLine($"Estatus de tarea antecedente: {antecedentTask.Status}");
         }
     }
 }
