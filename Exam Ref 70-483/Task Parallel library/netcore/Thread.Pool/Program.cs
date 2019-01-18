@@ -132,6 +132,62 @@ System.Threading.Thread MyFirstThread = new System.Threading.Thread(DoThread);
             Console.ReadKey();
             THread.Abort();
         }
+
+        static void CreateThreadWithJoinMethod(){
+            System.Threading.Thread Thread = new System.Threading.Thread(
+                delegate(){
+                    Console.WriteLine("Thread starting");
+                    System.Threading.Thread.Sleep(5000);
+                    Console.WriteLine("Thread done!");
+                }
+            );
+
+            Thread.Start();
+
+            Console.WriteLine("Joining to thread");
+            Thread.Join();
+        }
+
+        static void CreateThreadWithThreadLocalRef(){
+            ThreadLocal = new System.Threading.ThreadLocal<Random>(
+                () => { 
+                    Console.WriteLine($"Creando generador de números enteros aleatorios para HIlo #{System.Threading.Thread.CurrentThread.ManagedThreadId}..."); 
+                    return new Random(10); 
+                }, true
+            );
+
+            System.Threading.Thread T1 = new System.Threading.Thread(
+                delegate(){
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Console.WriteLine($"t1: {ThreadLocal.Value.Next(10)}");
+                        System.Threading.Thread.Sleep(500);
+                    }
+                }
+            );
+
+            System.Threading.Thread T2 = new System.Threading.Thread(
+                delegate(){
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Console.WriteLine($"t2: {ThreadLocal.Value.Next(10)}");
+                        System.Threading.Thread.Sleep(500);
+                    }
+
+                    T1.Join();
+                }
+            );
+
+            T1.Start();
+            T2.Start();
+
+            T2.Join();
+        }
+
+        static System.Threading.ThreadLocal<Random> ThreadLocal{
+            get; set;
+        }
+
         static void Main(string[] args)
         {
             //CreateATask();
@@ -142,8 +198,11 @@ System.Threading.Thread MyFirstThread = new System.Threading.Thread(DoThread);
 
             //CreateATaskPTSLE(2509);
             //AbortAThread(1000);
-            AbortAThreadWithSharedVariable(500);
+            //AbortAThreadWithSharedVariable(500);
+            //CreateThreadWithJoinMethod();
+            CreateThreadWithThreadLocalRef();
             Console.WriteLine("Finalizando ejecución de método MAIN");
+            Console.WriteLine($"Número de instancias inicializadas por ThreadLocal: {ThreadLocal.Values.Count}");
             //Console.WriteLine($"Valor de prioridad de Hilo #{System.Threading.Thread.CurrentThread.ManagedThreadId} actual (main): " +
             //    $"{System.Threading.Thread.CurrentThread.Priority}");
             //Console.WriteLine("Es proceso en segundo plano? " + (System.Threading.Thread.CurrentThread.IsBackground? "Si": "No"));
