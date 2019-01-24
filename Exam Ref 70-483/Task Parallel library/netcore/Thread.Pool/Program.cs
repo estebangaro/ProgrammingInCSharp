@@ -182,6 +182,18 @@ System.Threading.Thread MyFirstThread = new System.Threading.Thread(DoThread);
             T2.Start();
 
             T2.Join();
+
+            Console.WriteLine($"Número de instancias inicializadas por ThreadLocal: {ThreadLocal.Values.Count}");
+        }
+
+        static void ShowThreadContextInfo(System.Threading.Thread thread){
+            Console.WriteLine("Información de contexto");
+            Console.WriteLine($"Nombre: {thread.Name}");
+            Console.WriteLine($"Prioridad: {thread.Priority}");
+            Console.WriteLine($"Cultura: {thread.CurrentCulture}");
+            Console.WriteLine($"Es proceso en segundo plano: {thread.IsBackground}");
+            Console.WriteLine($"Contexto de ejecución: {thread.ExecutionContext}");
+            Console.WriteLine($"Esta estancado: {thread.IsThreadPoolThread}");
         }
 
         static System.Threading.ThreadLocal<Random> ThreadLocal{
@@ -200,9 +212,11 @@ System.Threading.Thread MyFirstThread = new System.Threading.Thread(DoThread);
             //AbortAThread(1000);
             //AbortAThreadWithSharedVariable(500);
             //CreateThreadWithJoinMethod();
-            CreateThreadWithThreadLocalRef();
+            //CreateThreadWithThreadLocalRef();
+            System.Threading.Thread.CurrentThread.Name = "Main Thread";
+            ShowThreadContextInfo(System.Threading.Thread.CurrentThread);
             Console.WriteLine("Finalizando ejecución de método MAIN");
-            Console.WriteLine($"Número de instancias inicializadas por ThreadLocal: {ThreadLocal.Values.Count}");
+            
             //Console.WriteLine($"Valor de prioridad de Hilo #{System.Threading.Thread.CurrentThread.ManagedThreadId} actual (main): " +
             //    $"{System.Threading.Thread.CurrentThread.Priority}");
             //Console.WriteLine("Es proceso en segundo plano? " + (System.Threading.Thread.CurrentThread.IsBackground? "Si": "No"));
