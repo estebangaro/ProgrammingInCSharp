@@ -98,3 +98,5 @@ scheduling => programar/planificar
 higher priority request => solicitud de mayor prioridad
 a greater => una mayor
 is no longer required => ya no es necesario
+overwhelm => abrumar/agobiar
+idle => libre, ocioso, desocupado

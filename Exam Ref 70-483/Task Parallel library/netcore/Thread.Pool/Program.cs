@@ -4,6 +4,8 @@ namespace Thread.Pool
 {
     class Program
     {
+        [ThreadStatic]
+        static int counter;
         static bool tickRunning;
         static bool TickRunning{
             get{
@@ -196,6 +198,29 @@ System.Threading.Thread MyFirstThread = new System.Threading.Thread(DoThread);
             Console.WriteLine($"Esta estancado: {thread.IsThreadPoolThread}");
         }
 
+        static void DoWork (object objec) {
+                    Console.WriteLine("Valor previo de variable static: " + counter);
+                    Console.WriteLine("Do work item " + objec);
+                    System.Threading.Thread.Sleep(500);
+                    Console.WriteLine("Finishing work item  " + objec);
+                    Console.WriteLine("Se ejecuta en segundo plano: " + System.Threading.Thread.CurrentThread.IsBackground);
+                    Console.WriteLine("HIlo #: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
+
+                    counter++;
+        }
+        static void UseThreadPool(){
+            for(int i = 0; i < 50; i++){
+                /*int i5s = i;
+                System.Threading.Thread LOcal = new System.Threading.Thread(() => DoWork(i5s));
+                LOcal.Start();*/
+                if(System.Threading.ThreadPool.QueueUserWorkItem(DoWork, i)){
+                    Console.WriteLine($"Elemento de trabajo #{i} enconlado exitosamente");
+                }else{
+                    Console.WriteLine($"Elemento de trabajo #{i} enconlado erroneamente");
+                }
+            }
+        }
+
         static System.Threading.ThreadLocal<Random> ThreadLocal{
             get; set;
         }
@@ -213,14 +238,16 @@ System.Threading.Thread MyFirstThread = new System.Threading.Thread(DoThread);
             //AbortAThreadWithSharedVariable(500);
             //CreateThreadWithJoinMethod();
             //CreateThreadWithThreadLocalRef();
-            System.Threading.Thread.CurrentThread.Name = "Main Thread";
-            ShowThreadContextInfo(System.Threading.Thread.CurrentThread);
+            //System.Threading.Thread.CurrentThread.Name = "Main Thread";
+            //ShowThreadContextInfo(System.Threading.Thread.CurrentThread);
+            UseThreadPool();
             Console.WriteLine("Finalizando ejecución de método MAIN");
             
             //Console.WriteLine($"Valor de prioridad de Hilo #{System.Threading.Thread.CurrentThread.ManagedThreadId} actual (main): " +
             //    $"{System.Threading.Thread.CurrentThread.Priority}");
             //Console.WriteLine("Es proceso en segundo plano? " + (System.Threading.Thread.CurrentThread.IsBackground? "Si": "No"));
             Console.WriteLine("Press any key to end.");
+            Console.ReadKey();
         }
     }
 }
