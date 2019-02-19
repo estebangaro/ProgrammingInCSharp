@@ -1,3 +1,4 @@
+major topic area => área temática principal
 at a glance => de un vistazo
 proper ray => rayo apropiado
 aimed => dirigir, apuntado
