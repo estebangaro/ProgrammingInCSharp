@@ -1,0 +1,473 @@
+Iniciando demo de administración de ciclos paralelos.
+Iniciando trabajo en 0
+Iniciando trabajo en 166
+Iniciando trabajo en 332
+Finalizando trabajo en 0
+Iniciando trabajo en 1
+Finalizando trabajo en 166
+Finalizando trabajo en 332
+Iniciando trabajo en 333
+Iniciando trabajo en 167
+Finalizando trabajo en 1
+Iniciando trabajo en 2
+Finalizando trabajo en 333
+Iniciando trabajo en 334
+Finalizando trabajo en 167
+Iniciando trabajo en 168
+Finalizando trabajo en 2
+Iniciando trabajo en 3
+Finalizando trabajo en 334
+Iniciando trabajo en 335
+Finalizando trabajo en 168
+Iniciando trabajo en 169
+Finalizando trabajo en 3
+Iniciando trabajo en 4
+Finalizando trabajo en 169
+Finalizando trabajo en 335
+Iniciando trabajo en 170
+Iniciando trabajo en 336
+Finalizando trabajo en 4
+Iniciando trabajo en 5
+Finalizando trabajo en 170
+Iniciando trabajo en 171
+Finalizando trabajo en 336
+Iniciando trabajo en 337
+Finalizando trabajo en 5
+Iniciando trabajo en 6
+Finalizando trabajo en 171
+Iniciando trabajo en 172
+Finalizando trabajo en 337
+Iniciando trabajo en 338
+Finalizando trabajo en 6
+Iniciando trabajo en 7
+Finalizando trabajo en 172
+Finalizando trabajo en 338
+Iniciando trabajo en 339
+Iniciando trabajo en 173
+Finalizando trabajo en 7
+Iniciando trabajo en 8
+Finalizando trabajo en 339
+Iniciando trabajo en 340
+Finalizando trabajo en 173
+Iniciando trabajo en 174
+Finalizando trabajo en 8
+Iniciando trabajo en 9
+Finalizando trabajo en 340
+Iniciando trabajo en 341
+Finalizando trabajo en 174
+Iniciando trabajo en 175
+Finalizando trabajo en 9
+Iniciando trabajo en 10
+Finalizando trabajo en 341
+Iniciando trabajo en 342
+Finalizando trabajo en 175
+Iniciando trabajo en 176
+Finalizando trabajo en 10
+Iniciando trabajo en 11
+Finalizando trabajo en 176
+Iniciando trabajo en 177
+Finalizando trabajo en 342
+Iniciando trabajo en 343
+Finalizando trabajo en 11
+Iniciando trabajo en 12
+Finalizando trabajo en 177
+Iniciando trabajo en 178
+Finalizando trabajo en 343
+Iniciando trabajo en 344
+Finalizando trabajo en 12
+Iniciando trabajo en 13
+Finalizando trabajo en 178
+Iniciando trabajo en 179
+Finalizando trabajo en 344
+Iniciando trabajo en 345
+Finalizando trabajo en 13
+Iniciando trabajo en 14
+Finalizando trabajo en 179
+Iniciando trabajo en 180
+Finalizando trabajo en 345
+Iniciando trabajo en 346
+Finalizando trabajo en 14
+Iniciando trabajo en 15
+Finalizando trabajo en 180
+Iniciando trabajo en 181
+Finalizando trabajo en 346
+Iniciando trabajo en 347
+Finalizando trabajo en 15
+Iniciando trabajo en 16
+Finalizando trabajo en 181
+Iniciando trabajo en 182
+Finalizando trabajo en 347
+Iniciando trabajo en 348
+Finalizando trabajo en 16
+Iniciando trabajo en 17
+Finalizando trabajo en 182
+Iniciando trabajo en 183
+Finalizando trabajo en 348
+Iniciando trabajo en 349
+Finalizando trabajo en 17
+Iniciando trabajo en 18
+Finalizando trabajo en 183
+Iniciando trabajo en 184
+Finalizando trabajo en 349
+Iniciando trabajo en 350
+Finalizando trabajo en 18
+Iniciando trabajo en 19
+Finalizando trabajo en 184
+Iniciando trabajo en 185
+Finalizando trabajo en 350
+Iniciando trabajo en 351
+Finalizando trabajo en 19
+Iniciando trabajo en 20
+Finalizando trabajo en 185
+Iniciando trabajo en 186
+Finalizando trabajo en 351
+Iniciando trabajo en 352
+Finalizando trabajo en 20
+Iniciando trabajo en 21
+Finalizando trabajo en 186
+Iniciando trabajo en 187
+Finalizando trabajo en 352
+Iniciando trabajo en 353
+Finalizando trabajo en 21
+Iniciando trabajo en 22
+Finalizando trabajo en 187
+Iniciando trabajo en 188
+Finalizando trabajo en 353
+Iniciando trabajo en 354
+Finalizando trabajo en 22
+Iniciando trabajo en 23
+Finalizando trabajo en 188
+Iniciando trabajo en 189
+Finalizando trabajo en 354
+Iniciando trabajo en 355
+Finalizando trabajo en 23
+Iniciando trabajo en 24
+Finalizando trabajo en 189
+Iniciando trabajo en 190
+Finalizando trabajo en 355
+Iniciando trabajo en 356
+Finalizando trabajo en 24
+Iniciando trabajo en 25
+Finalizando trabajo en 190
+Iniciando trabajo en 191
+Finalizando trabajo en 356
+Iniciando trabajo en 357
+Finalizando trabajo en 25
+Iniciando trabajo en 26
+Finalizando trabajo en 191
+Iniciando trabajo en 192
+Finalizando trabajo en 357
+Iniciando trabajo en 358
+Finalizando trabajo en 26
+Iniciando trabajo en 27
+Finalizando trabajo en 192
+Iniciando trabajo en 193
+Finalizando trabajo en 358
+Iniciando trabajo en 359
+Finalizando trabajo en 27
+Iniciando trabajo en 28
+Finalizando trabajo en 193
+Iniciando trabajo en 194
+Finalizando trabajo en 359
+Iniciando trabajo en 360
+Finalizando trabajo en 28
+Iniciando trabajo en 29
+Finalizando trabajo en 194
+Iniciando trabajo en 195
+Finalizando trabajo en 360
+Iniciando trabajo en 361
+Finalizando trabajo en 29
+Iniciando trabajo en 30
+Finalizando trabajo en 195
+Iniciando trabajo en 196
+Finalizando trabajo en 361
+Iniciando trabajo en 362
+Finalizando trabajo en 30
+Iniciando trabajo en 31
+Finalizando trabajo en 196
+Iniciando trabajo en 197
+Finalizando trabajo en 362
+Iniciando trabajo en 363
+Finalizando trabajo en 31
+Iniciando trabajo en 32
+Finalizando trabajo en 197
+Iniciando trabajo en 198
+Finalizando trabajo en 363
+Iniciando trabajo en 364
+Finalizando trabajo en 32
+Iniciando trabajo en 33
+Finalizando trabajo en 198
+Finalizando trabajo en 364
+Iniciando trabajo en 199
+Iniciando trabajo en 365
+Finalizando trabajo en 33, después de invocar a Break
+Iniciando trabajo en 34
+Finalizando trabajo en 199, después de invocar a Break
+Finalizando por solicitud de ruptura, en item#365
+Valor de ShouldExitCurrentIteration:True; item#365
+Finalizando trabajo en 34, después de invocar a Break
+Iniciando trabajo en 35
+Finalizando trabajo en 35, después de invocar a Break
+Iniciando trabajo en 36
+Finalizando trabajo en 36, después de invocar a Break
+Iniciando trabajo en 37
+Finalizando trabajo en 37, después de invocar a Break
+Iniciando trabajo en 38
+Finalizando trabajo en 38, después de invocar a Break
+Iniciando trabajo en 39
+Finalizando trabajo en 39, después de invocar a Break
+Iniciando trabajo en 40
+Finalizando trabajo en 40, después de invocar a Break
+Iniciando trabajo en 41
+Finalizando trabajo en 41, después de invocar a Break
+Iniciando trabajo en 42
+Finalizando trabajo en 42, después de invocar a Break
+Iniciando trabajo en 43
+Finalizando trabajo en 43, después de invocar a Break
+Iniciando trabajo en 44
+Finalizando trabajo en 44, después de invocar a Break
+Iniciando trabajo en 45
+Finalizando trabajo en 45, después de invocar a Break
+Iniciando trabajo en 46
+Finalizando trabajo en 46, después de invocar a Break
+Iniciando trabajo en 47
+Finalizando trabajo en 47, después de invocar a Break
+Iniciando trabajo en 48
+Finalizando trabajo en 48, después de invocar a Break
+Iniciando trabajo en 49
+Finalizando trabajo en 49, después de invocar a Break
+Iniciando trabajo en 50
+Finalizando trabajo en 50, después de invocar a Break
+Iniciando trabajo en 51
+Finalizando trabajo en 51, después de invocar a Break
+Iniciando trabajo en 52
+Finalizando trabajo en 52, después de invocar a Break
+Iniciando trabajo en 53
+Finalizando trabajo en 53, después de invocar a Break
+Iniciando trabajo en 54
+Finalizando trabajo en 54, después de invocar a Break
+Iniciando trabajo en 55
+Finalizando trabajo en 55, después de invocar a Break
+Iniciando trabajo en 56
+Finalizando trabajo en 56, después de invocar a Break
+Iniciando trabajo en 57
+Finalizando trabajo en 57, después de invocar a Break
+Iniciando trabajo en 58
+Finalizando trabajo en 58, después de invocar a Break
+Iniciando trabajo en 59
+Finalizando trabajo en 59, después de invocar a Break
+Iniciando trabajo en 60
+Finalizando trabajo en 60, después de invocar a Break
+Iniciando trabajo en 61
+Finalizando trabajo en 61, después de invocar a Break
+Iniciando trabajo en 62
+Finalizando trabajo en 62, después de invocar a Break
+Iniciando trabajo en 63
+Finalizando trabajo en 63, después de invocar a Break
+Iniciando trabajo en 64
+Finalizando trabajo en 64, después de invocar a Break
+Iniciando trabajo en 65
+Finalizando trabajo en 65, después de invocar a Break
+Iniciando trabajo en 66
+Finalizando trabajo en 66, después de invocar a Break
+Iniciando trabajo en 67
+Finalizando trabajo en 67, después de invocar a Break
+Iniciando trabajo en 68
+Finalizando trabajo en 68, después de invocar a Break
+Iniciando trabajo en 69
+Finalizando trabajo en 69, después de invocar a Break
+Iniciando trabajo en 70
+Finalizando trabajo en 70, después de invocar a Break
+Iniciando trabajo en 71
+Finalizando trabajo en 71, después de invocar a Break
+Iniciando trabajo en 72
+Finalizando trabajo en 72, después de invocar a Break
+Iniciando trabajo en 73
+Finalizando trabajo en 73, después de invocar a Break
+Iniciando trabajo en 74
+Finalizando trabajo en 74, después de invocar a Break
+Iniciando trabajo en 75
+Finalizando trabajo en 75, después de invocar a Break
+Iniciando trabajo en 76
+Finalizando trabajo en 76, después de invocar a Break
+Iniciando trabajo en 77
+Finalizando trabajo en 77, después de invocar a Break
+Iniciando trabajo en 78
+Finalizando trabajo en 78, después de invocar a Break
+Iniciando trabajo en 79
+Finalizando trabajo en 79, después de invocar a Break
+Iniciando trabajo en 80
+Finalizando trabajo en 80, después de invocar a Break
+Iniciando trabajo en 81
+Finalizando trabajo en 81, después de invocar a Break
+Iniciando trabajo en 82
+Finalizando trabajo en 82, después de invocar a Break
+Iniciando trabajo en 83
+Finalizando trabajo en 83, después de invocar a Break
+Iniciando trabajo en 84
+Finalizando trabajo en 84, después de invocar a Break
+Iniciando trabajo en 85
+Finalizando trabajo en 85, después de invocar a Break
+Iniciando trabajo en 86
+Finalizando trabajo en 86, después de invocar a Break
+Iniciando trabajo en 87
+Finalizando trabajo en 87, después de invocar a Break
+Iniciando trabajo en 88
+Finalizando trabajo en 88, después de invocar a Break
+Iniciando trabajo en 89
+Finalizando trabajo en 89, después de invocar a Break
+Iniciando trabajo en 90
+Finalizando trabajo en 90, después de invocar a Break
+Iniciando trabajo en 91
+Finalizando trabajo en 91, después de invocar a Break
+Iniciando trabajo en 92
+Finalizando trabajo en 92, después de invocar a Break
+Iniciando trabajo en 93
+Finalizando trabajo en 93, después de invocar a Break
+Iniciando trabajo en 94
+Finalizando trabajo en 94, después de invocar a Break
+Iniciando trabajo en 95
+Finalizando trabajo en 95, después de invocar a Break
+Iniciando trabajo en 96
+Finalizando trabajo en 96, después de invocar a Break
+Iniciando trabajo en 97
+Finalizando trabajo en 97, después de invocar a Break
+Iniciando trabajo en 98
+Finalizando trabajo en 98, después de invocar a Break
+Iniciando trabajo en 99
+Finalizando trabajo en 99, después de invocar a Break
+Iniciando trabajo en 100
+Finalizando trabajo en 100, después de invocar a Break
+Iniciando trabajo en 101
+Finalizando trabajo en 101, después de invocar a Break
+Iniciando trabajo en 102
+Finalizando trabajo en 102, después de invocar a Break
+Iniciando trabajo en 103
+Finalizando trabajo en 103, después de invocar a Break
+Iniciando trabajo en 104
+Finalizando trabajo en 104, después de invocar a Break
+Iniciando trabajo en 105
+Finalizando trabajo en 105, después de invocar a Break
+Iniciando trabajo en 106
+Finalizando trabajo en 106, después de invocar a Break
+Iniciando trabajo en 107
+Finalizando trabajo en 107, después de invocar a Break
+Iniciando trabajo en 108
+Finalizando trabajo en 108, después de invocar a Break
+Iniciando trabajo en 109
+Finalizando trabajo en 109, después de invocar a Break
+Iniciando trabajo en 110
+Finalizando trabajo en 110, después de invocar a Break
+Iniciando trabajo en 111
+Finalizando trabajo en 111, después de invocar a Break
+Iniciando trabajo en 112
+Finalizando trabajo en 112, después de invocar a Break
+Iniciando trabajo en 113
+Finalizando trabajo en 113, después de invocar a Break
+Iniciando trabajo en 114
+Finalizando trabajo en 114, después de invocar a Break
+Iniciando trabajo en 115
+Finalizando trabajo en 115, después de invocar a Break
+Iniciando trabajo en 116
+Finalizando trabajo en 116, después de invocar a Break
+Iniciando trabajo en 117
+Finalizando trabajo en 117, después de invocar a Break
+Iniciando trabajo en 118
+Finalizando trabajo en 118, después de invocar a Break
+Iniciando trabajo en 119
+Finalizando trabajo en 119, después de invocar a Break
+Iniciando trabajo en 120
+Finalizando trabajo en 120, después de invocar a Break
+Iniciando trabajo en 121
+Finalizando trabajo en 121, después de invocar a Break
+Iniciando trabajo en 122
+Finalizando trabajo en 122, después de invocar a Break
+Iniciando trabajo en 123
+Finalizando trabajo en 123, después de invocar a Break
+Iniciando trabajo en 124
+Finalizando trabajo en 124, después de invocar a Break
+Iniciando trabajo en 125
+Finalizando trabajo en 125, después de invocar a Break
+Iniciando trabajo en 126
+Finalizando trabajo en 126, después de invocar a Break
+Iniciando trabajo en 127
+Finalizando trabajo en 127, después de invocar a Break
+Iniciando trabajo en 128
+Finalizando trabajo en 128, después de invocar a Break
+Iniciando trabajo en 129
+Finalizando trabajo en 129, después de invocar a Break
+Iniciando trabajo en 130
+Finalizando trabajo en 130, después de invocar a Break
+Iniciando trabajo en 131
+Finalizando trabajo en 131, después de invocar a Break
+Iniciando trabajo en 132
+Finalizando trabajo en 132, después de invocar a Break
+Iniciando trabajo en 133
+Finalizando trabajo en 133, después de invocar a Break
+Iniciando trabajo en 134
+Finalizando trabajo en 134, después de invocar a Break
+Iniciando trabajo en 135
+Finalizando trabajo en 135, después de invocar a Break
+Iniciando trabajo en 136
+Finalizando trabajo en 136, después de invocar a Break
+Iniciando trabajo en 137
+Finalizando trabajo en 137, después de invocar a Break
+Iniciando trabajo en 138
+Finalizando trabajo en 138, después de invocar a Break
+Iniciando trabajo en 139
+Finalizando trabajo en 139, después de invocar a Break
+Iniciando trabajo en 140
+Finalizando trabajo en 140, después de invocar a Break
+Iniciando trabajo en 141
+Finalizando trabajo en 141, después de invocar a Break
+Iniciando trabajo en 142
+Finalizando trabajo en 142, después de invocar a Break
+Iniciando trabajo en 143
+Finalizando trabajo en 143, después de invocar a Break
+Iniciando trabajo en 144
+Finalizando trabajo en 144, después de invocar a Break
+Iniciando trabajo en 145
+Finalizando trabajo en 145, después de invocar a Break
+Iniciando trabajo en 146
+Finalizando trabajo en 146, después de invocar a Break
+Iniciando trabajo en 147
+Finalizando trabajo en 147, después de invocar a Break
+Iniciando trabajo en 148
+Finalizando trabajo en 148, después de invocar a Break
+Iniciando trabajo en 149
+Finalizando trabajo en 149, después de invocar a Break
+Iniciando trabajo en 150
+Finalizando trabajo en 150, después de invocar a Break
+Iniciando trabajo en 151
+Finalizando trabajo en 151, después de invocar a Break
+Iniciando trabajo en 152
+Finalizando trabajo en 152, después de invocar a Break
+Iniciando trabajo en 153
+Finalizando trabajo en 153, después de invocar a Break
+Iniciando trabajo en 154
+Finalizando trabajo en 154, después de invocar a Break
+Iniciando trabajo en 155
+Finalizando trabajo en 155, después de invocar a Break
+Iniciando trabajo en 156
+Finalizando trabajo en 156, después de invocar a Break
+Iniciando trabajo en 157
+Finalizando trabajo en 157, después de invocar a Break
+Iniciando trabajo en 158
+Finalizando trabajo en 158, después de invocar a Break
+Iniciando trabajo en 159
+Finalizando trabajo en 159, después de invocar a Break
+Iniciando trabajo en 160
+Finalizando trabajo en 160, después de invocar a Break
+Iniciando trabajo en 161
+Finalizando trabajo en 161, después de invocar a Break
+Iniciando trabajo en 162
+Finalizando trabajo en 162, después de invocar a Break
+Iniciando trabajo en 163
+Finalizando trabajo en 163, después de invocar a Break
+Iniciando trabajo en 164
+Finalizando trabajo en 164, después de invocar a Break
+Iniciando trabajo en 165
+Finalizando trabajo en 165, después de invocar a Break
+Finalizando ejecución de "demo de administración de ciclos paralelos".
+Estado de ParallelLoopResult: IsCompleted = False, LowestBreakIteration = 199
+Número de iteraciones procesadas: 234
