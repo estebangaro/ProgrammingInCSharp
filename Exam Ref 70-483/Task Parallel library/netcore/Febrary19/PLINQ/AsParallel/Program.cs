@@ -49,7 +49,25 @@ namespace AsParallel
             7) El operador AsOrdered, solo puede ser ejecutado precedido de los siguientes operadores:
                 7.1) AsParallel.
                 7.2) Range y Repeat.
-            8) *Pendiente ejecutar ejemplo con AsSequential.
+            8) AsSequential, permite ejecutar operadores de consulta (precedidos por AsSequiential), como
+                operadores LINQ to Objects al convertir la colección ParallelQuery en IEnumerable, esto
+                es de mucha ayuda si deseamos ejecutar ciertos operadores de manera ordenada / secuencial.
+            9) El operador OrderBy de ParallelQuery, no garantiza un ordenamiento estable, por lo que
+                para asegurar el ordenamiento en una consulta paralelizada, se recomienda implementar
+                la técnica expuesta en la URL: https://docs.microsoft.com/en-us/dotnet/api/system.linq.parallelenumerable.orderby?view=netcore-2.2 
+                sección "Remarks".
+            10) No se logŕo alterar el orden producido por el operador OrderBy (+ técnica para asegurar
+                ordenamiento estable), con el objetivo de implementar caso de uso de operador AsSequiential.
+            11) El operador ForAll, permite obtener los resultados de la consulta (de salida) como stream,
+                de modo que tan pronto la consulta arroje cada uno de los elementos resultantes, estos
+                se vuelven disponibles inmediatamente para el consumidor de la consulta, por lo que
+                las sugerencias de fusión de datos de salida, junto con las operaciones de ordenamiento
+                solicitadas (asordered, order by) son ignoradas (MergeOptions.NotBuffered).
+            12) El método ForAll, a diferencia de la construcción tradicional foreach de C#, se ejecuta en paralelo
+                y además antes de que la consulta finalice.
+            13) El operador ForAll, a diferencia de la implementación de System.Threading.Tasks.Parallel.ForEach,
+                igualmente se ejecuta en paralelo, sin embargo no requiere de la ejecución y almaceamiento en buffer completo
+                para que se inicie la ejecución de proceso de items.
              */
             Console.WriteLine("Iniciando demo de PLINQ!");
             Person[] Persons = new Person[]{
@@ -63,7 +81,7 @@ namespace AsParallel
                 new Person { Name = "Samantha", Age = 23, City = "E.U.A", DateOfBirth = new DateTime(1981, 8, 11)},
                 new Person { Name = "Elias", Age = 47, City = "México", DateOfBirth = new DateTime(1981, 8, 11)},
                 new Person { Name = "Pepe", Age = 47, City = "México", DateOfBirth = new DateTime(1981, 8, 11)},
-                /*new Person { Name = "Ámbar2", Age = 24, City = "México", DateOfBirth = new DateTime(1994, 12, 24)},
+                new Person { Name = "Ámbar2", Age = 24, City = "México", DateOfBirth = new DateTime(1994, 12, 24)},
                 new Person { Name = "Esteban2", Age = 27, City = "México", DateOfBirth = new DateTime(1991, 9, 25)},
                 new Person { Name = "Bárbara2", Age = 0, City = "México", DateOfBirth = new DateTime(2019, 9, 11)},
                 new Person { Name = "Arturo2", Age = 0, City = "México", DateOfBirth = new DateTime(2019, 9, 12)},
@@ -72,7 +90,7 @@ namespace AsParallel
                 new Person { Name = "Luis2", Age = 23, City = "Nicaragua", DateOfBirth = new DateTime(1981, 8, 11)},
                 new Person { Name = "Samantha2", Age = 23, City = "E.U.A", DateOfBirth = new DateTime(1981, 8, 11)},
                 new Person { Name = "Elias2", Age = 47, City = "México", DateOfBirth = new DateTime(1981, 8, 11)},
-                new Person { Name = "Pepe2", Age = 47, City = "México", DateOfBirth = new DateTime(1981, 8, 11)}*/
+                new Person { Name = "Pepe2", Age = 47, City = "México", DateOfBirth = new DateTime(1981, 8, 11)}
             };
 
             //UseAsParallel(Persons);
@@ -94,6 +112,25 @@ namespace AsParallel
             }
         }
 
+        static void UseForEach(System.Collections.Generic.IEnumerable<Person> Persons){
+         Console.WriteLine("Iniciando demo de ForEach...");
+
+            var PersonsOfMexico = 
+            Persons.AsParallel()
+                                    .Where(person => { ShowThreadCurrentInfo($"\"Where city (plinq - {person.Name})\"");
+                                        return person.City == "México"; })
+                                    .Select((person,index) => { ShowThreadCurrentInfo($"\"Select person-index (plinq - {person.Name})\""); return new { Person=person, Index=index }; })
+                                    .OrderBy((person) => { ShowThreadCurrentInfo($"\"order by name (plinq - {person.Person.Name})\""); return person.Person.Name; })
+                                    .ThenBy(person => { ShowThreadCurrentInfo($"\"then by (plinq - {person.Person.Name})\""); return person.Index; })
+                                    .Select((person) => { ShowThreadCurrentInfo($"\"Select person (plinq - {person.Person.Name})\""); return person.Person.Name; })
+                                    //.ForAll(personName => Console.WriteLine(personName))
+                                    ;
+
+            Console.WriteLine("Personas que viven en México");
+            System.Threading.Tasks.Parallel.ForEach(PersonsOfMexico, 
+                personName => { ShowThreadCurrentInfo($"\"ForEach person-name (parallel- {personName})\"", true); });
+        }
+
         static void UseInformingParallelization(System.Collections.Generic.IEnumerable<Person> Persons){
             UseWithDegreeOfParallelism(Persons);
             //UseWithCancellation(Persons);
@@ -101,6 +138,8 @@ namespace AsParallel
             //UseAsOrdered(Persons);
             //UseLinq(Persons);
             //UseOrderBy(Persons);
+            //UseForAll(Persons);
+            //UseForEach(Persons);
         }
         static void UseLinq(System.Collections.Generic.IEnumerable<Person> Persons){
             Console.WriteLine("Iniciando demo de LINQ...");
@@ -149,12 +188,12 @@ namespace AsParallel
                                     .Select((person,index) => { ShowThreadCurrentInfo($"\"Select person-index (plinq - {person.Name})\""); return new { Person=person, Index=index }; })
                                     .OrderBy((person) => { ShowThreadCurrentInfo($"\"order by name (plinq - {person.Person.Name})\""); return person.Person.Name; })
                                     .ThenBy(person => { ShowThreadCurrentInfo($"\"then by (plinq - {person.Person.Name})\""); return person.Index; })
-                                    .Select((person) => { ShowThreadCurrentInfo($"\"Select person (plinq - {person.Person.Name})\""); return person.Person; })
-                                    .AsSequential()
+                                    .Select((person) => { ShowThreadCurrentInfo($"\"Select person (plinq - {person.Person.Name})\""); return person.Person.Name; })
+                                    /*. AsSequential()
                                     .Where(person => { ShowThreadCurrentInfo($"\"Where name after s (plinq - {person.Name})\"");
                                         return person.Name.Contains('a'); })
                                     .Select(person => { ShowThreadCurrentInfo($"\"Select name after s (plinq - {person.Name})\"");
-                                        return person.Name; })
+                                        return person.Name; })*/
                                     ;
             
             Console.WriteLine("Personas viviendo en México:");
@@ -164,19 +203,59 @@ namespace AsParallel
             }
         }
 
-        static void UseWithDegreeOfParallelism(System.Collections.Generic.IEnumerable<Person> Persons){
-            Console.WriteLine("Iniciando demo de WithDegreeOfParallelism...");
+        static void 
+        UseForAll(System.Collections.Generic.IEnumerable<Person> Persons){
+         Console.WriteLine("Iniciando demo de ForAll...");
 
-            var PersonsOfMexico = Persons.AsParallel()
+            Console.WriteLine("Personas viviendo en México:");
+            var PersonsOfMexico = 
+            Persons.AsParallel().AsOrdered()
                                     .WithDegreeOfParallelism(3)
                                     .Where(person => { ShowThreadCurrentInfo($"\"Where city (plinq - {person.Name})\"");
                                         return person.City == "México"; })
+                                    //.Select((person,index) => { ShowThreadCurrentInfo($"\"Select person-index (plinq - {person.Name})\""); return new { Person=person, Index=index }; })
+                                    //.OrderBy((person) => { ShowThreadCurrentInfo($"\"order by name (plinq - {person.Person.Name})\""); return person.Person.Name; })
+                                    //.ThenBy(person => { ShowThreadCurrentInfo($"\"then by (plinq - {person.Person.Name})\""); return person.Index; })
+                                    .Select((person) => { ShowThreadCurrentInfo($"\"Select person (plinq - {person.Name})\""); return person.Name; })
+                                    //.ForAll(personName => Console.WriteLine(personName))
+                                    ;
+
+            Console.WriteLine("Personas viviendo en México:");
+            foreach (var PersonName in PersonsOfMexico)
+            {
+                Console.WriteLine(PersonName);
+            }
+        }
+
+        static bool IsFromMexico(Person person) { 
+            ShowThreadCurrentInfo($"\"Where city (plinq - {person.Name})\"");
+            if(person.Name == "Ámbar"){
+                throw new NotSupportedException("es Barbarita ! :)");
+            }
+            return person.City == "México"; 
+        }
+
+        static void UseWithDegreeOfParallelism(System.Collections.Generic.IEnumerable<Person> Persons){
+            Console.WriteLine("Iniciando demo de WithDegreeOfParallelism...");
+
+            try{
+            var PersonsOfMexico = Persons.AsParallel()
+                                    .WithDegreeOfParallelism(3)
+                                    .Where(IsFromMexico)
                                     .Select((person) => { ShowThreadCurrentInfo($"\"select name (plinq - {person.Name})\""); return person.Name; });
             
             Console.WriteLine("Personas viviendo en México:");
             foreach (var PersonName in PersonsOfMexico)
             {
                 Console.WriteLine(PersonName);
+            }
+            }catch(AggregateException ae){
+
+                Console.WriteLine("Manejando excepcion de agregación (Aggregate exception)");
+
+                foreach(var e in ae.InnerExceptions){
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 

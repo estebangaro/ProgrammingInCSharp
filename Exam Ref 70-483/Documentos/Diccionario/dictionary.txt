@@ -1,3 +1,4 @@
+a side-effect => efecto secundario
 fall back => retroceder
 attemp => intentar
 further => promover

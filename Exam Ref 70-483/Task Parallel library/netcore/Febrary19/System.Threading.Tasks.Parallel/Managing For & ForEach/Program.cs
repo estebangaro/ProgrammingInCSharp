@@ -34,7 +34,7 @@ namespace Managing_For___ForEach
                 excepción al invocador del ciclo en paralleo (For/ForEach). NOTA: Comportamiento similar a
                 Stop.
             6) Se crea una instancía ParallelLoopState por Ciclo (por invocación de método For / ForEach),
-                la cual es utilizada por todas las iteraciones del ciclot en paralelo.
+                la cual es utilizada por todas las iteraciones del ciclo en paralelo.
             7)*Considerar la revisión de las sobrecargas de For / ForEach (debido a la documentación,
                 en ParallelLoopOptions, ParallelLoopResult y ParallelLoopState).
              */
