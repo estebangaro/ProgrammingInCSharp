@@ -66,8 +66,14 @@ namespace AsParallel
             12) El método ForAll, a diferencia de la construcción tradicional foreach de C#, se ejecuta en paralelo
                 y además antes de que la consulta finalice.
             13) El operador ForAll, a diferencia de la implementación de System.Threading.Tasks.Parallel.ForEach,
-                igualmente se ejecuta en paralelo, sin embargo no requiere de la ejecución y almaceamiento en buffer completo
-                para que se inicie la ejecución de proceso de items.
+                igualmente se ejecuta en paralelo, sin embargo hace disponibles los resultados de salida, tan pronto se
+                encuentren disponibles (MergeOptions Not Buffered).
+            14) Se puede implementar control de excepciones, mediente el uso de la instrucción TRY, en consultas
+                paralelizadas.
+            15) Se recomienda implementar bloques catch para la posible generación de excepciones, en función
+                de los operadores utilizados. Ejem: Where; ArgumentNullException, OperationCanceledException, AggregateException
+                generandose excepiones agregadas (AggregateException's), para excepciones generadas al ejecutar
+                los métodos anónimos proporcionados a los operadores de consulta.
              */
             Console.WriteLine("Iniciando demo de PLINQ!");
             Person[] Persons = new Person[]{
@@ -94,11 +100,42 @@ namespace AsParallel
             };
 
             //UseAsParallel(Persons);
-            UseInformingParallelization(Persons);
+            //UseInformingParallelization(Persons);
+            UseExceptionsInQueries(Persons);
 
             Console.WriteLine("Finalizando demo, de método AsParallel...");
             Console.ReadKey();
         }
+
+        static void UseExceptionsInQueries(System.Collections.Generic.IEnumerable<Person> Persons){
+            try
+            {
+                var Cts = new System.Threading.CancellationTokenSource();
+                var Ct = Cts.Token;
+                Cts.Cancel();
+                Func<Person, bool> Predicate = null;
+                    //person => { ShowThreadCurrentInfo($"where (age); {person.Name}", true); if(person.Age > 15) { 
+                    //throw new NotSupportedException($"Edad mayor a 15 no permitida, Thread {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+                //} return person.Age > 10; };
+                var QueryPersons = Persons.AsParallel()
+                    .WithCancellation(Ct).Where(Predicate).ToList();
+            }
+            catch(AggregateException ae)
+            {
+                Console.WriteLine("Primera excepción: " + ae.InnerException.Message);
+                foreach(var Exception in ae.InnerExceptions){
+                    Console.WriteLine("Exepción: " + Exception.Message + "; Tipo: " + Exception.GetType());
+                }
+            }
+            catch(ArgumentNullException an){
+                Console.WriteLine("Argument null exception handled!");
+            }
+            catch(OperationCanceledException oc){
+                Console.WriteLine("Operation Cancelled exception handled!");
+            }catch{
+                Console.WriteLine("Excepción no manejada");
+            }
+        }        
 
         static void UseAsParallel(System.Collections.Generic.IEnumerable<Person> Persons){
             var PersonsOfMexico = from person in Persons.AsParallel()
@@ -229,9 +266,9 @@ namespace AsParallel
 
         static bool IsFromMexico(Person person) { 
             ShowThreadCurrentInfo($"\"Where city (plinq - {person.Name})\"");
-            if(person.Name == "Ámbar"){
+            /*if(person.Name == "Ámbar"){
                 throw new NotSupportedException("es Barbarita ! :)");
-            }
+            }*/
             return person.City == "México"; 
         }
 
@@ -241,14 +278,20 @@ namespace AsParallel
             try{
             var PersonsOfMexico = Persons.AsParallel()
                                     .WithDegreeOfParallelism(3)
-                                    .Where(IsFromMexico)
+                                    //.WithMergeOptions(ParallelMergeOptions.NotBuffered)
+                                    .Where(person => person.City == "México")
                                     .Select((person) => { ShowThreadCurrentInfo($"\"select name (plinq - {person.Name})\""); return person.Name; });
             
             Console.WriteLine("Personas viviendo en México:");
-            foreach (var PersonName in PersonsOfMexico)
+            PersonsOfMexico.ForAll(PersonName => Console.WriteLine($"{PersonName} - Thread {System.Threading.Thread.CurrentThread.ManagedThreadId}"));
+            
+            /*
+            System.Threading.Tasks.Parallel.ForEach(PersonsOfMexico, 
+                PersonName => Console.WriteLine($"{PersonName} - Thread {System.Threading.Thread.CurrentThread.ManagedThreadId}"));*/
+            /*foreach (var PersonName in PersonsOfMexico)
             {
-                Console.WriteLine(PersonName);
-            }
+                Console.WriteLine($"{PersonName} - Thread {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            }*/
             }catch(AggregateException ae){
 
                 Console.WriteLine("Manejando excepcion de agregación (Aggregate exception)");
