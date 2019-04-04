@@ -8,23 +8,42 @@ namespace Tasks.Parallel
         {
             Console.WriteLine("Hello Parallel Class!");
             //UseInvokeMethod();
-            UseForEeachMethod();
+            //UseForEeachMethod();
+            UseForMethod();
         }
 
         static void UseForEeachMethod(){
-            Console.WriteLine("Iniciando ejecución de InvokeMethod - NamedMethod");
+            Console.WriteLine("Iniciando ejecución de ForEach - Method");
 
             System.Collections.Generic.IEnumerable<int> IntegersCollection = 
                 System.Linq.Enumerable.Range(1,500);
-            System.Threading.Tasks.Parallel.ForEach(IntegersCollection, delegate(int integer){
-                Console.WriteLine("Trabando en entero " + integer);
+            var Result = System.Threading.Tasks.Parallel.ForEach(IntegersCollection, delegate(int integer){
+                Console.WriteLine("Trabajando en entero " + integer);
                 System.Threading.Thread.Sleep(integer * 2);
-                if(integer == 999){
+                if(integer == 126){
                     Console.WriteLine("Por generar excepción");
                     throw new NotSupportedException("Excepción en entero 25");
                 }
                 Console.WriteLine("Finalizando con entero " + integer);
             });
+            Console.WriteLine("Estado de cliclo ForEach Paralelizado: " + Result.IsCompleted);
+        }
+
+        static void UseForMethod(){
+            Console.WriteLine("Iniciando ejecución de For - Method"); 
+            //Se define rango de iteración (Inicio/fin en iteraciones de 1).
+            int FromInclusive = 1, ToExclusive = 26;
+            var Result = System.Threading.Tasks.Parallel.For(FromInclusive, ToExclusive, 
+                loopIndex => {
+                    Console.WriteLine("Inciando ejecución de índice de iteración " + loopIndex);
+                    System.Threading.Thread.Sleep(loopIndex * 5);
+                    Console.WriteLine("Finalizando ejecución de índice de iteración " + loopIndex);
+                });
+            Console.WriteLine("Estado de cliclo For Paralelizado: " + Result.IsCompleted);
+        }
+
+        static void UseForAndForEachWithParallelOptions(){
+            Console.WriteLine("Iniciando ejecución de For - Method"); 
         }
 
         static void UseInvokeMethod(){
