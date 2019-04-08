@@ -44,6 +44,10 @@ namespace Tasks.Parallel
             Console.WriteLine("Estado de cliclo For Paralelizado: " + Result.IsCompleted);
         }
 
+        static void ManagingForAndForEachMethods(){
+            
+        }
+
         static void UseForAndForEachWithParallelOptions(){
             
             /*Console.WriteLine("Iniciando ejecución de For Method - PO MaxDegreeOfParallelism");
