@@ -7,14 +7,43 @@ namespace consoleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            UseStopMethodOnForEach();
+            UseBreakMethodOnForEach();
         }
 
-        static void UseBreakMethodOnFor(){
+        static void UseBreakMethodOnForEach(){
             //para implementar.
+            System.Collections.Generic.IEnumerable<int> RangeInterations 
+                = System.Linq.Enumerable.Range(1, 500);
+
+            var ResultForEach = System.Threading.Tasks.Parallel.ForEach(RangeInterations,
+                new System.Threading.Tasks.ParallelOptions{MaxDegreeOfParallelism = 6},
+                (indexIterator, loopState, indexLong) => {
+                    int ManagedThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                    Console.WriteLine($"Hilo # {ManagedThreadId} - Inciando ejecución de iteración #" + indexIterator
+                    + (loopState.LowestBreakIteration.HasValue? $" - LowestBI = {loopState.LowestBreakIteration}": ""));
+
+if(loopState.ShouldExitCurrentIteration){
+                        WriteLoopStateState(loopState, "Inicio", indexIterator);
+                    }
+                    if(indexIterator == 49){
+                        WriteLoopStateState(loopState, $"Trigger Detención (valor de longindex = {indexLong} )", indexIterator);
+                        loopState.Break();
+                    }
+                    System.Threading.Thread.Sleep(1000);
+                    if(loopState.ShouldExitCurrentIteration){
+                        WriteLoopStateState(loopState, "Fin", indexIterator);
+                    }
+
+                    Console.WriteLine($"Hilo # {ManagedThreadId} - Finalizando ejecución de iteración #" + indexIterator
+                    + (loopState.LowestBreakIteration.HasValue? $" - LowestBI = {loopState.LowestBreakIteration}": ""));
+                });
+
+                ShowParallelLoopResultState(ResultForEach, "ForEach");
         }
 
-        static void UseStopMethodOnForEach(){
+        
+
+        static void UseStopMethodOnFor(){
             //System.Collections.IEnumerable RangeInterations = System.Linq.Enumerable.Range(0, 500);
             int StartIteration = 1, EndIteration = 500;
 
@@ -38,13 +67,7 @@ namespace consoleApp
                 Console.WriteLine($"Hilo # {ManagedThreadId} - Finalizando ejecución de iteración #" + indexIteration);
                 });
 
-            Console.WriteLine("Finalizando ejecución de método For con ParallelLoopState");
-            Console.WriteLine($"Resultado: \"IsCompleted\" : \"{ParallelResult.IsCompleted}\"");
-            if(ParallelResult.LowestBreakIteration.HasValue){
-            Console.WriteLine($"Resultado: \"LowestBreakIteration\" : \"{ParallelResult.LowestBreakIteration}\"");
-            }
-            else{
-                Console.WriteLine($"Resultado: \"LowestBreakIteration\" : \"NULL\"");}
+            ShowParallelLoopResultState(ParallelResult, "For");
             }
 
         static void WriteLoopStateState(System.Threading.Tasks.ParallelLoopState loopState,
@@ -53,7 +76,18 @@ namespace consoleApp
             string  Hilo = $"Hilo #{ManagedThreadId} - Fase {phase} - Iteración #{indexIteration}: ";
             Console.WriteLine($"{Hilo}{loopState.GetInfo()}");
         }
-    }
+
+        static void ShowParallelLoopResultState(System.Threading.Tasks.ParallelLoopResult ParallelResult, string method){
+            Console.WriteLine($"Finalizando ejecución de método {method} con ParallelLoopState");
+            Console.WriteLine($"Resultado: \"IsCompleted\" : \"{ParallelResult.IsCompleted}\"");
+            if(ParallelResult.LowestBreakIteration.HasValue){
+            Console.WriteLine($"Resultado: \"LowestBreakIteration\" : \"{ParallelResult.LowestBreakIteration}\"");
+            }
+            else{
+                Console.WriteLine($"Resultado: \"LowestBreakIteration\" : \"NULL\"");}
+            }
+        }
+    
 
     static class ParallelLoopStateExtensions{
         public static string GetInfo(this System.Threading.Tasks.ParallelLoopState loopState){
