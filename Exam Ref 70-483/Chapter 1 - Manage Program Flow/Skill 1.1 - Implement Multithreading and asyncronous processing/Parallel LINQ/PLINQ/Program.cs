@@ -19,7 +19,7 @@ namespace PLINQ
                 new Person{Name = "Fernando Arellano", City = "México"},
                 new Person{Name = "Víctor Arellano", City = "México"},
                 new Person{Name = "Rocío Rosas", City = "México"},
-                new Person{Name = "Dalia García", City = "México"},
+                new Person{Name = "Dalia García", City = "Perú"},
                 new Person{Name = "ESteban Rosas", City = "México"},
             };
             Console.WriteLine("Hello PLINQ!");
@@ -39,11 +39,13 @@ namespace PLINQ
                 /*.AsParallel()
                 .WithDegreeOfParallelism(3)*/
                 .Where(person => { ShowInfo("where", person); return person.City == "México"; })
+                //.GroupBy(person => {ShowInfo("groupby", person); return person.Name.First();})
+                //.Select(persongroup => {ShowInfo("select", new Person{Name = persongroup.Key.ToString()}); return new Person{Name = persongroup.Key.ToString(), City = string.Join(',', persongroup.Select(person => person.Name))};});
                 .Select(person => {ShowInfo("select", person); return person;});
 
             foreach (var person in PersonsFromMexico)
             {
-                Console.WriteLine(person.Name);
+                Console.WriteLine(string.Concat(person.Name, "-", person.City));
             }
             
             Console.WriteLine("Finalizando ejecución de método AsParallel");
